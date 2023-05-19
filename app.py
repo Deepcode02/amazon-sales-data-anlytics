@@ -89,16 +89,60 @@ def univariate():
     
     # clean_rating_count
     df.sort_values(by='clean_rating_count', ascending=False, inplace=True)
-    # df.reset_index(inplace=True)
+    df.reset_index(inplace=True)
     fig4 = px.bar(df.head(100), y='clean_rating_count', color='clean_rating_count', height=800, hover_name='product_name')
+    
+    # histogram of clean_rating_count
+    fig5 = px.histogram(df, x='clean_rating_count', nbins=1000, height=500, log_y=True, title='Histogram of clean_rating_count')
+    conclusion = 'Most of the products are priced between 0 and 2000'
+    fig5.add_annotation(x=70000, y=2, text=conclusion, font_size=20)
     
     return render_template('univariate.html', 
                            fig1=fig1.to_html(),
                            fig2=fig2.to_html(),
                            fig3=fig3.to_html(),
-                           fig4=fig4.to_html())
+                           fig4=fig4.to_html(),
+                           fig5=fig5.to_html())
   
-
+@app.route('/analysis/bivariate')
+def bivariate():
+    
+    px.scatter(df, x='clean_actual_price',
+           y='clean_rating_count',
+           color='clean_rating_count',
+           hover_name='product_name',
+           marginal_x='histogram', marginal_y='histogram')
+    fig1 = px.scatter(df, x='clean_actual_price')
+    
+    # box plot
+    px.box(df, x='clean_actual_price')
+    fig2 = px.box(df, x='clean_actual_price')
+    
+    px.histogram(df, x='clean_rating')
+    fig3=px.histogram(df, x='clean_rating')
+    
+    # correlation price and discount
+    px.scatter(df, x='clean_actual_price', y='clean_discounted_price', color='clean_rating_count', hover_name='product_name')
+    fig4=px.scatter(df, x='clean_actual_price', y='clean_discounted_price', color='clean_rating_count', hover_name='product_name')
+    
+    px.scatter(df, x='clean_actual_price', y='clean_discount_percentage', color='clean_rating_count', hover_name='product_name')
+    fig5=px.scatter(df, x='clean_actual_price', y='clean_discount_percentage', color='clean_rating_count', hover_name='product_name')
+    
+    # 100 least rated products
+    px.bar(df.tail(100), y='clean_rating_count', color='clean_rating_count', hover_name='product_name')
+    fig6=px.bar(df.tail(100), y='clean_rating_count', color='clean_rating_count', hover_name='product_name')
+    
+    return render_template('bivariate.html',
+                           fig1=fig1.to_html(),
+                           fig2=fig2.to_html(),
+                           fig3=fig3.to_html(),
+                           fig4=fig4.to_html(),
+                           fig5=fig5.to_html(),
+                           fig6=fig6.to_html())
+    
+    
+    
+    
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8000, debug=True)
  
