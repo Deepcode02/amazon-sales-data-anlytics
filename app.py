@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import plotly.express as px
+from textblob import TextBlob
 
 def clean_rating_count_column(rating):
     if isinstance(rating, str):
@@ -49,6 +50,28 @@ def clean_rating_count(rating_count):
         return rating_count
     return rating_count
 
+def get_sentiment(text):
+    blob = TextBlob(text)
+    sentiment = blob.sentiment.polarity
+    return sentiment
+
+def get_subjectivity(text):
+    blob = TextBlob(text)
+    subjectivity = blob.sentiment.subjectivity
+    return subjectivity
+
+def get_sentiment_name(sentiment):
+    if sentiment > 0.5:
+        return 'highly positive'
+    elif sentiment > 0:
+        return 'slightly positive'
+    elif sentiment == 0:
+        return 'neutral'
+    elif sentiment < -0.5:
+        return 'highly negative'
+    else:
+        return 'slightly negative'
+
 pd.set_option('display.max_columns', None)
 def load_data():
     df = pd.read_csv('datasets/amazon.csv')
@@ -58,9 +81,20 @@ def load_data():
     df['clean_actual_price'] = df['actual_price'].apply(clean_actual_price_column)
     df['clean_discount_percentage'] = df['discount_percentage'].apply(clean_discounted_percentage)
     df['clean_rating_count'] = df['rating_count'].apply(clean_rating_count)
+    df['review_content']
+    df['sentiment'] = df['review_content'].apply(get_sentiment)
+    df['subjectivity'] = df['review_content'].apply(get_subjectivity)
+    df['sentiment_name'] = df['sentiment'].apply(get_sentiment_name)
+    df['clean_actual_price'].mean()
+    df[df['clean_actual_price'] < 5000]
+    df[df['sentiment'] < 0]
+    df[df['sentiment'] < 0].reset_index(drop=True)
+    
     return df
 
 df = load_data()
+
+
 
 
 @app.route('/')
@@ -141,7 +175,19 @@ def bivariate():
                            fig6=fig6.to_html())
     
     
+@app.route('/analysis/sentiment')
+def sentiment():
     
+    px.bar(df[df['sentiment'] < 0].reset_index(drop=True), y='sentiment',hover_name='product_name')
+    fig1=px.bar(df[df['sentiment'] < 0].reset_index(drop=True), y='sentiment',hover_name='product_name')
+    
+    sentimentals = df['sentiment_name'].value_counts()
+    px.pie(sentimentals, names=sentimentals.index, values=sentimentals, title='Sentiment Distribution')
+    fig2=px.pie(sentimentals, names=sentimentals.index, values=sentimentals, title='Sentiment Distribution')
+    
+    return render_template('sentiment.html',
+                           fig1=fig1.to_html(),
+                           fig2=fig2.to_html())
     
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8000, debug=True)
