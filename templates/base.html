@@ -15,8 +15,8 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-xl navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="/">ASDA</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">ASDA.com</a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation"></button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -35,7 +35,17 @@
                 </li>
             </ul>
         </div>
+      <from class="from-inline">
+      <input class="from-control mr-sm-2" type="Search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </from>
     </nav>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Welcome to ASDA!</strong> Amazon Seles Data Analytics.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
   </header>
   <main>
     {% block content %}
