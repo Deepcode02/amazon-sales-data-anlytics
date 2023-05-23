@@ -92,6 +92,8 @@ def load_data():
     
     return df
 
+
+
 df = load_data()
 
 
@@ -107,7 +109,7 @@ def univariate():
     
     # clean_actual_price
     df.sort_values(by='clean_actual_price', ascending=False, inplace=True)
-    df.reset_index(inplace=True)
+    # df.reset_index(inplace=True)
     fig1 = px.bar(df.head(100), y='clean_actual_price', color='clean_actual_price', height=800, hover_name='product_name')
     
     # histogram of clean_actual_price
