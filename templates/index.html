@@ -2,7 +2,10 @@
 
 {% block css %}
 <style>
-    
+    .img{
+        width: 10;
+        height: 50;
+    }    
 </style>
 {% endblock %}
 {% block content %}
@@ -11,7 +14,7 @@
             <div class="col-md-10 mx-auto">
                 <div class="row align-items-md-stretch">
                     <div class="col-md-4">
-                        <img src='/static/images/Univariate.png'>
+                        
                         <div
                             class="h-100 p-5 text-white bg-primary border rounded-5">
                             <h2>Univariate Analysis</h2>
@@ -19,11 +22,12 @@
                                 univariate analysis is a form of analysis that only involves a single variable.
                                  In a practical setting, a univariate analysis means the analysis of a single variable (or column) in a dataset (data table)</p>
                             <a href="/analysis/univariate" class="btn btn-dark" type="button">View Analysis</a>
+                            <img src='/static/images/Univariate.png'class="img">
                         </div>
                     </div>
                     
                     <div class="col-md-4">
-                        <img src='/static/images/Bivariate.png'>
+                        
                         <div
                             class="h-100 p-5 text-white bg-success border rounded-5">
                             <h2>Bivariate Analysis</h2>
@@ -31,11 +35,12 @@
                                 One variable here is dependent while the other is independent. 
                                 These variables are usually denoted by X and Y. So, here we analyse the changes occured between the two variables and to what extent.</p>
                             <a href="/analysis/bivariate" class="btn btn-dark" type="button">View Analysis</a>
+                            <img src='/static/images/Bivariate.png'class="img">
                         </div>
                     </div>
                     
                     <div class="col-md-4">
-                        <img src='/static/images/Sentiment.jpg' class="img">
+                        
                         <div
                         
                             class="h-100 p-5 text-white bg-danger border rounded-5">
@@ -44,13 +49,21 @@
                                 artificial intelligence and computational linguistics to mine text for sentiment and 
                                 subjective information such as whether it is expressing positive, negative or neutral feelings.</p>
                             <a href="/analysis/sentiment" class="btn btn-dark" type="Submit">View Analysis</a>
+                            <img src='/static/images/Sentiment.jpg'class="img">
+                            
                         </div>
                     </div>
                     
                 </div>
+                
+            </div>
+            <div class="col-md-10 mx-auto">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, numquam debitis. Fuga.
             </div>
         </div>
+        
     </div>
+    
 {% endblock %}
 {% block js %}
 <script>
